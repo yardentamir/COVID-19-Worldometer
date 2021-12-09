@@ -5,8 +5,9 @@ const apisObj = {
 };
 
 const mainObj = {
-  countriesData: {}, // name; code:
-  cononaData: {},
+  countriesData: [], // name: // code:
+  // regionsSet: new Set(),
+  dataCountrySortedByRegion: [],
 };
 
 const getCoronaData = async () => {
@@ -14,12 +15,10 @@ const getCoronaData = async () => {
     const {
       data: { data },
     } = await axios.get(apisObj.proxy + apisObj.covidAPI);
-    console.log(data);
     data.forEach((countryCovidInfo) => {
-      mainObj.countriesData[countryCovidInfo.code] =
+      mainObj.countriesData[countryCovidInfo.code].latest_covid_data =
         countryCovidInfo.latest_data;
     });
-    console.log(mainObj);
   } catch (error) {
     throw new Error(error);
   }
@@ -28,20 +27,58 @@ const getCoronaData = async () => {
 const getCountriesData = async () => {
   try {
     const { data } = await axios.get(apisObj.proxy + apisObj.countryAPI);
-    console.log(data);
     data.forEach((countryInfo) => {
-      mainObj.countriesData[countryInfo.cca2] = {
-        name: countryInfo.name.common,
-        region: countryInfo.region,
-      };
+      mainObj.countriesData.push({
+        [countryInfo.cca2]: {
+          name: countryInfo.name.common,
+          region: countryInfo.region,
+        },
+      });
     });
+    console.log(mainObj.countriesData);
   } catch (error) {
     throw new Error(error);
   }
 };
 
-getCountriesData();
-getCoronaData();
+// const sortByRegion = () => {
+//   console.log(mainObj);
+//   for (const keyCode in mainObj.countriesData) {
+//     mainObj.regionsSet.add(mainObj.countriesData[keyCode].region);
+//   }
+// mainObj.regionsSet.forEach((regionSetItem) => {
+//   mainObj.dataCountrySortedByRegion
+// })
+//   console.log(second);
+// };
+
+const regionClick = (reg = "Europe") => {
+  console.log(mainObj.countriesData);
+
+  const europeArr = mainObj.countriesData.filter(
+    (country) => country.region === reg
+  );
+
+  console.log(europeArr);
+};
+
+const countryClick = (countryKey = "SV") => {
+  const countryCoronaObject = mainObj.countriesData.find((key) => {
+    console.log(key);
+    return key == countryKey;
+  });
+
+  console.log(countryCoronaObject);
+};
+
+const getAllData = async () => {
+  await getCountriesData();
+  await getCoronaData();
+  regionClick();
+  countryClick();
+};
+
+getAllData();
 
 // const getCountries = async () => {
 //   const country = await axios.get("https://corona-api.com/countries/AF", [

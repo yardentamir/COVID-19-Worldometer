@@ -5,10 +5,13 @@ const apisObj = {
 };
 
 const mainObj = {
-  countriesData: [], // name: // code:
-  // regionsSet: new Set(),
+  countriesData: {}, // name: // code:
+  // countriesDataArr: [],
+  regionsSet: new Set(),
   dataCountrySortedByRegion: [],
 };
+
+const NO_COVID_DATA = { confirmed: 0, critical: 0, deaths: 0, recovered: 0 };
 
 const getCoronaData = async () => {
   try {
@@ -19,6 +22,9 @@ const getCoronaData = async () => {
       mainObj.countriesData[countryCovidInfo.code].latest_covid_data =
         countryCovidInfo.latest_data;
     });
+    // mainObj.countriesDataArr = Object.keys(mainObj.countriesData).map(
+    //   (key) => mainObj.countriesData[key]
+    // );
   } catch (error) {
     throw new Error(error);
   }
@@ -28,52 +34,54 @@ const getCountriesData = async () => {
   try {
     const { data } = await axios.get(apisObj.proxy + apisObj.countryAPI);
     data.forEach((countryInfo) => {
-      mainObj.countriesData.push({
-        [countryInfo.cca2]: {
-          name: countryInfo.name.common,
-          region: countryInfo.region,
-        },
-      });
+      mainObj.countriesData[countryInfo.cca2] = {
+        // code: countryInfo.cca2,
+        name: countryInfo.name.common,
+        region: countryInfo.region,
+      };
     });
-    console.log(mainObj.countriesData);
   } catch (error) {
     throw new Error(error);
   }
 };
 
-// const sortByRegion = () => {
-//   console.log(mainObj);
-//   for (const keyCode in mainObj.countriesData) {
-//     mainObj.regionsSet.add(mainObj.countriesData[keyCode].region);
-//   }
-// mainObj.regionsSet.forEach((regionSetItem) => {
-//   mainObj.dataCountrySortedByRegion
-// })
-//   console.log(second);
-// };
+const sortByRegion = () => {
+  console.log(mainObj);
+  for (const keyCode in mainObj.countriesData) {
+    if (mainObj.countriesData[keyCode].region) {
+      mainObj.regionsSet.add(mainObj.countriesData[keyCode].region);
+    }
+  }
+  const first = [...mainObj.regionsSet][0];
+  console.log(first);
+  // mainObj.regionsSet.forEach((regionSetItem) => {
+  //   mainObj.dataCountrySortedByRegion;
+  // });
+};
 
 const regionClick = (reg = "Europe") => {
   console.log(mainObj.countriesData);
 
-  const europeArr = mainObj.countriesData.filter(
+  const europeArr = Object.values(mainObj.countriesData).filter(
     (country) => country.region === reg
   );
-
   console.log(europeArr);
 };
 
-const countryClick = (countryKey = "SV") => {
-  const countryCoronaObject = mainObj.countriesData.find((key) => {
-    console.log(key);
-    return key == countryKey;
-  });
-
-  console.log(countryCoronaObject);
+const countryClick = (countryKey = "IL") => {
+  let ObjByCountryKey;
+  for (let [key, value] of Object.entries(mainObj.countriesData)) {
+    if (key == countryKey) {
+      ObjByCountryKey = value;
+    }
+  }
+  console.log(ObjByCountryKey);
 };
 
 const getAllData = async () => {
   await getCountriesData();
   await getCoronaData();
+  sortByRegion();
   regionClick();
   countryClick();
 };

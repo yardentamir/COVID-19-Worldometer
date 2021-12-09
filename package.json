@@ -1,0 +1,22 @@
+{
+  "name": "covid-19-worldometer",
+  "version": "1.0.0",
+  "description": "COVID19",
+  "main": "index.js",
+  "scripts": {
+    "sass": "node-sass -w scss/ -o dist/css/ --recursive"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yardentamir/COVID-19-Worldometer.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/yardentamir/COVID-19-Worldometer/issues"
+  },
+  "homepage": "https://github.com/yardentamir/COVID-19-Worldometer#readme",
+  "devDependencies": {
+    "node-sass": "^7.0.0"
+  }
+}

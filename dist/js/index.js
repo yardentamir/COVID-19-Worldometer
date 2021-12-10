@@ -4,87 +4,139 @@ const apisObj = {
   covidAPI: "https://corona-api.com/countries",
 };
 
-const mainObj = {
-  countriesData: {}, // name: // code:
-  // countriesDataArr: [],
-  regionsSet: new Set(),
-  dataCountrySortedByRegion: [],
+const mainData = {
+  World: [],
 };
 
-const NO_COVID_DATA = { confirmed: 0, critical: 0, deaths: 0, recovered: 0 };
+const DEFAULT_COVID_DATA = {
+  confirmed: 0,
+  critical: 0,
+  deaths: 0,
+  recovered: 0,
+};
 
-const getCoronaData = async () => {
+const countrySelectElement = document.querySelector("[data-select='country']");
+const regionSelectElement = document.querySelector("[data-select='region']");
+const situationSelectElement = document.querySelector(
+  "[data-select='situation']"
+);
+
+///-----------------------//
+
+const getCovidData = async () => {
   try {
     const {
       data: { data },
     } = await axios.get(apisObj.proxy + apisObj.covidAPI);
+    const covidData = {};
     data.forEach((countryCovidInfo) => {
-      mainObj.countriesData[countryCovidInfo.code].latest_covid_data =
-        countryCovidInfo.latest_data;
+      covidData[countryCovidInfo.code] = countryCovidInfo.latest_data;
     });
-    // mainObj.countriesDataArr = Object.keys(mainObj.countriesData).map(
-    //   (key) => mainObj.countriesData[key]
-    // );
+    console.log(data);
+    return covidData;
   } catch (error) {
     throw new Error(error);
   }
 };
 
-const getCountriesData = async () => {
+const getCountriesData = async (coronaData) => {
   try {
     const { data } = await axios.get(apisObj.proxy + apisObj.countryAPI);
     data.forEach((countryInfo) => {
-      mainObj.countriesData[countryInfo.cca2] = {
-        // code: countryInfo.cca2,
+      const cData = {
         name: countryInfo.name.common,
         region: countryInfo.region,
+        code: countryInfo.cca2,
+        covidData: coronaData[countryInfo.cca2] || DEFAULT_COVID_DATA,
       };
+
+      if (countryInfo.region) {
+        if (!mainData[countryInfo.region]) {
+          mainData[countryInfo.region] = [];
+        }
+        mainData[countryInfo.region].push(cData);
+      }
+      mainData.World.push(cData);
     });
   } catch (error) {
     throw new Error(error);
   }
 };
 
-const sortByRegion = () => {
-  console.log(mainObj);
-  for (const keyCode in mainObj.countriesData) {
-    if (mainObj.countriesData[keyCode].region) {
-      mainObj.regionsSet.add(mainObj.countriesData[keyCode].region);
-    }
-  }
-  const first = [...mainObj.regionsSet][0];
-  console.log(first);
-  // mainObj.regionsSet.forEach((regionSetItem) => {
-  //   mainObj.dataCountrySortedByRegion;
-  // });
+const loadingIsDone = () => {
+  const spinnerElement = document.querySelector(".spinner");
+  const containerElement = document.querySelector(".container");
+  spinnerElement.classList.add("display-none");
+  containerElement.classList.remove("display-none");
 };
 
-const regionClick = (reg = "Europe") => {
-  console.log(mainObj.countriesData);
+//---------------------------//
 
-  const europeArr = Object.values(mainObj.countriesData).filter(
-    (country) => country.region === reg
+const onRegionClick = ({ target }) => {
+  const reg = target.value;
+  let ObjByRegionKey;
+  for (let [key, value] of Object.entries(mainData)) {
+    if (key === reg) {
+      ObjByRegionKey = value;
+      break;
+    }
+  }
+  reAssignCountryOptions(reg);
+};
+
+const reAssignCountryOptions = (region) => {
+  countrySelectElement.innerHTML = "";
+  mainData[region].forEach((country) => {
+    const optionCountryElement = `<option value="${country.code}">${country.name}</option>`;
+    countrySelectElement.innerHTML += optionCountryElement;
+  });
+};
+
+const onCountryClick = ({ target }) => {
+  const countryCode = target.value;
+  console.log(mainData);
+  console.log(target);
+  const countryObj = mainData.World.find(
+    (country) => country.code === countryCode
   );
-  console.log(europeArr);
+  console.log(countryObj);
+  // const europeArr = Object.values(mainData).filter(
+  //   (country) => country.region === reg
+  // );
 };
 
-const countryClick = (countryKey = "IL") => {
-  let ObjByCountryKey;
-  for (let [key, value] of Object.entries(mainObj.countriesData)) {
-    if (key == countryKey) {
-      ObjByCountryKey = value;
+const createAllOptions = () => {
+  mainData.World.forEach((country) => {
+    const optionCountryElement = `<option value="${country.code}">${country.name}</option>`;
+    countrySelectElement.innerHTML += optionCountryElement;
+  });
+
+  Object.keys(mainData).forEach((region) => {
+    const optionCountryElement = `<option value="${region}">${region}</option>`;
+    regionSelectElement.innerHTML += optionCountryElement;
+  });
+  Object.keys(mainData.World[0].covidData).forEach((covidData) => {
+    if (covidData !== "calculated") {
+      const optionCountryElement = `<option value="${covidData}">${covidData}</option>`;
+      situationSelectElement.innerHTML += optionCountryElement;
     }
-  }
-  console.log(ObjByCountryKey);
+  });
 };
 
 const getAllData = async () => {
-  await getCountriesData();
-  await getCoronaData();
-  sortByRegion();
-  regionClick();
-  countryClick();
+  try {
+    const covidData = await getCovidData();
+    await getCountriesData(covidData);
+    loadingIsDone();
+    createAllOptions();
+    regionSelectElement.addEventListener("change", onRegionClick);
+    countrySelectElement.addEventListener("change", onCountryClick);
+  } catch (error) {
+    console.log(error);
+  }
 };
+
+//---------------//
 
 getAllData();
 

@@ -5,6 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Corona</title>
+    <meta name="description" content="Corona Virus Worldwide Information" />
     <!-- scripts -->
     <script
       src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.6.2/chart.min.js"
@@ -13,14 +14,96 @@
     <script src="https://unpkg.com/axios/dist/axios.min.js" defer></script>
     <script src="/dist/js/index.js" defer></script>
     <!-- links -->
+    <link
+      rel="stylesheet"
+      href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
+      integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p"
+      crossorigin="anonymous"
+    />
     <link rel="stylesheet" href="/dist/css/normalize.css" />
     <link rel="stylesheet" href="/dist/css/main.css" />
   </head>
   <body>
-    <div class="container">
-      <div class="navlike"></div>
-      <div class="chart-wrapper">
-        <!-- <canvas id="myChart" class="chart-wrapper-item"></canvas> -->
+    <div class="spinner">
+      <div class="sk-circle">
+        <div class="sk-circle1 sk-child"></div>
+        <div class="sk-circle2 sk-child"></div>
+        <div class="sk-circle3 sk-child"></div>
+        <div class="sk-circle4 sk-child"></div>
+        <div class="sk-circle5 sk-child"></div>
+        <div class="sk-circle6 sk-child"></div>
+        <div class="sk-circle7 sk-child"></div>
+        <div class="sk-circle8 sk-child"></div>
+        <div class="sk-circle9 sk-child"></div>
+        <div class="sk-circle10 sk-child"></div>
+        <div class="sk-circle11 sk-child"></div>
+        <div class="sk-circle12 sk-child"></div>
+      </div>
+      <div class="spinner-titles">
+        <h2>Please Wait...</h2>
+        <h3>Don't Forget to Wash Your Hands!</h3>
+      </div>
+      <div class="spinner-washing">
+        <div>✋🏽</div>
+        <div>🧼</div>
+        <div>🤚🏻</div>
+      </div>
+    </div>
+    <div class="navlike">
+      <div class="navlike-logo"></div>
+    </div>
+    <div class="container display-none">
+      <div class="div2"></div>
+      <div class="selects-div">
+        <div class="selects-div-region">
+          <h3>Choose Region</h3>
+          <div class="select-wrapper">
+            <select data-select="region"></select>
+          </div>
+        </div>
+        <div class="selects-div-country">
+          <h3>Choose Country</h3>
+          <div class="select-wrapper">
+            <select data-select="country"></select>
+          </div>
+        </div>
+        <div class="selects-div-situation">
+          <h3>Choose Situation</h3>
+          <div class="select-wrapper">
+            <select data-select="situation"></select>
+          </div>
+        </div>
+      </div>
+      <div class="show-info">
+        <div class="show-info-situation">
+          <div>
+            <h3>Total cases</h3>
+            <p></p>
+          </div>
+          <div>
+            <h3>New cases</h3>
+            <p></p>
+          </div>
+          <div>
+            <h3>Total deaths</h3>
+            <p></p>
+          </div>
+          <div>
+            <h3>New deaths</h3>
+            <p></p>
+          </div>
+          <div>
+            <h3>Total recovered</h3>
+            <p></p>
+          </div>
+          <div>
+            <h3>Critical</h3>
+            <p></p>
+          </div>
+        </div>
+        <div class="chart-wrapper">
+          <canvas id="myChart" class="chart-wrapper-item display-none"></canvas>
+        </div>
       </div>
     </div>
   </body>

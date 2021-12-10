@@ -49,60 +49,81 @@
         <div>🤚🏻</div>
       </div>
     </div>
-    <div class="navlike">
-      <div class="navlike-logo"></div>
-    </div>
-    <div class="container display-none">
-      <div class="div2"></div>
-      <div class="selects-div">
-        <div class="selects-div-region">
-          <h3>Choose Region</h3>
-          <div class="select-wrapper">
-            <select data-select="region"></select>
-          </div>
-        </div>
-        <div class="selects-div-country">
-          <h3>Choose Country</h3>
-          <div class="select-wrapper">
-            <select data-select="country"></select>
-          </div>
-        </div>
-        <div class="selects-div-situation">
-          <h3>Choose Situation</h3>
-          <div class="select-wrapper">
-            <select data-select="situation"></select>
-          </div>
-        </div>
+    <div class="main-container display-none">
+      <div class="navlike">
+        <div class="navlike-logo"></div>
       </div>
-      <div class="show-info">
-        <div class="show-info-situation">
-          <div>
-            <h3>Total cases</h3>
-            <p></p>
+      <div class="container">
+        <div class="welcome-div">
+          <h1>Corona Virus Worldwide Information</h1>
+          <p>
+            Most people infected with the virus will experience mild to moderate
+            respiratory illness and recover without requiring special treatment.
+            However, some will become seriously ill and require medical
+            attention. Older people and those with underlying medical conditions
+            like cardiovascular disease, diabetes, chronic respiratory disease,
+            or cancer are more likely to develop serious illness. Anyone can get
+            sick with COVID-19 and become seriously ill or die at any age.
+          </p>
+        </div>
+        <div class="selects-div">
+          <div class="selects-div-region">
+            <h3>Choose Region</h3>
+            <div class="select-wrapper">
+              <select data-select="region"></select>
+            </div>
           </div>
-          <div>
-            <h3>New cases</h3>
-            <p></p>
+          <div class="selects-div-country">
+            <h3>Choose Country</h3>
+            <div class="select-wrapper">
+              <select data-select="country"></select>
+            </div>
           </div>
-          <div>
-            <h3>Total deaths</h3>
-            <p></p>
-          </div>
-          <div>
-            <h3>New deaths</h3>
-            <p></p>
-          </div>
-          <div>
-            <h3>Total recovered</h3>
-            <p></p>
-          </div>
-          <div>
-            <h3>Critical</h3>
-            <p></p>
+          <div class="selects-div-situation">
+            <h3>Choose Situation</h3>
+            <div class="select-wrapper">
+              <select data-select="situation"></select>
+            </div>
           </div>
         </div>
-        <div class="chart-wrapper">
-          <canvas id="myChart" class="chart-wrapper-item display-none"></canvas>
+        <div class="show-info">
+          <div class="visibility-hidden" data-char-or-info="info"">
+          <div class="show-info-situation flex-evenly cards">
+            <div>
+              <h3>Total cases</h3>
+              <p></p>
+            </div>
+            <div>
+              <h3>Total deaths</h3>
+              <p></p>
+            </div>
+            <div>
+              <h3>Total recovered</h3>
+              <p></p>
+            </div>
+            <div>
+              <h3>Critical</h3>
+              <p></p>
+            </div>
+          </div>
+          <div class="show-info-new flex-evenly cards">
+            <div>
+              <h3>New cases</h3>
+              <p></p>
+            </div>
+            <div>
+              <h3>New deaths</h3>
+              <p></p>
+            </div>
+          </div>
+        </div>
+          <div class="chart-wrapper">
+            <canvas
+              id="myChart"
+              class="chart-wrapper-item visibility-hidden"
+              data-char-or-info="chart"
+            ></canvas>
+          </div>
         </div>
       </div>
     </div>

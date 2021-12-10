@@ -1,51 +1,88 @@
+@font-face {
+  font-family: "Lobster";
+  src: url("/dist/fonts/Lobster-Regular.ttf");
+}
+
+@font-face {
+  font-family: "BalsamiqSans";
+  src: url("/dist/fonts/BalsamiqSans-Regular.ttf");
+}
+
+h1,
+h2 {
+  font-family: "Lobster", Arial, Helvetica, sans-serif;
+}
+
 .container {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(2, 1fr);
   grid-template-rows: repeat(3, 1fr);
   gap: 10px;
   padding: 2%;
+  font-family: "BalsamiqSans", Arial, Helvetica, sans-serif;
 
   > div {
     border-radius: 10px;
+    padding: 1.5vmin;
   }
+}
+
+body {
+  background-color: #c5c5c5;
 }
 
 /*----------------------------------------------------------------*/
 
 .navlike {
-  grid-area: 1 / 1 / 2 / 4;
-  background-color: wheat;
+  background-color: rgb(255, 222, 160);
   &-logo {
     background: url("/dist/img/coronavirus-logo.png") no-repeat center/cover;
     width: 70px;
     height: 70px;
   }
 }
-.div2 {
-  grid-area: 1 / 1 / 2 / 4;
-  background-color: black;
-}
-.show-info {
-  grid-area: 2 / 1 / 4 / 3;
-  background-color: blue;
-  &-situation {
-    display: flex;
-    justify-content: space-evenly;
-    div {
-      background-color: white;
-      border-radius: 10px;
-      padding: 1vmin;
-      font-size: 1.5vmin;
-    }
+.welcome-div {
+  grid-area: 1 / 1 / 2 / 3;
+  background-color: rgb(224, 147, 2);
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  color: white;
+
+  p {
+    margin: 0 20vmin;
   }
 }
+.show-info {
+  grid-area: 2 / 1 / 3 / 3;
+  background-image: linear-gradient(rgb(255, 166, 0), rgb(255, 177, 177));
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+}
+
+.flex-evenly {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.cards > div {
+  background-color: white;
+  border-radius: 10px;
+  padding: 1vmin;
+  font-size: 1.5vmin;
+  margin: 50px 0;
+}
 .selects-div {
-  grid-area: 2 / 3 / 4 / 4;
-  background-color: orange;
+  grid-area: 3 / 1 / 4 / 3;
+  background-color: rgb(255, 222, 160);
+  text-align: center;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
 }
 
 .display-none {
   display: none;
+}
+
+.visibility-hidden {
+  visibility: hidden;
 }
 
 //----//
@@ -60,7 +97,7 @@ select {
   flex: 1;
   padding: 0 1em;
   color: #fff;
-  background-color: black;
+  background-color: rgb(82, 82, 82);
   background-image: none;
   cursor: pointer;
 }
@@ -72,7 +109,7 @@ select::-ms-expand {
 .select-wrapper {
   position: relative;
   display: flex;
-  width: 20em;
+  width: 100%;
   height: 3em;
   border-radius: 0.25em;
   overflow: hidden;
@@ -84,7 +121,7 @@ select::-ms-expand {
   top: 0;
   right: 0;
   padding: 1em;
-  background-color: #34495e;
+  background-color: #aa8d61;
   transition: 0.25s all ease;
   pointer-events: none;
 }

@@ -1,8 +1,6 @@
-const apisObj = {
-  proxy: "https://intense-mesa-62220.herokuapp.com/",
-  countryAPI: "https://restcountries.herokuapp.com/api/v1/",
-  covidAPI: "https://corona-api.com/countries",
-};
+const proxy = "https://intense-mesa-62220.herokuapp.com/";
+const countryAPI = "https://restcountries.herokuapp.com/api/v1/";
+const covidAPI = "https://corona-api.com/countries";
 
 const mainData = {
   World: [],
@@ -20,6 +18,10 @@ const regionSelectElement = document.querySelector("[data-select='region']");
 const situationSelectElement = document.querySelector(
   "[data-select='situation']"
 );
+const chartElement = document.querySelector("[data-char-or-info='chart']");
+const infoElement = document.querySelector("[data-char-or-info='info']");
+
+const situationSelected = "confirmed";
 
 ///-----------------------//
 
@@ -27,12 +29,15 @@ const getCovidData = async () => {
   try {
     const {
       data: { data },
-    } = await axios.get(apisObj.proxy + apisObj.covidAPI);
+    } = await axios.get(proxy + covidAPI);
     const covidData = {};
     data.forEach((countryCovidInfo) => {
-      covidData[countryCovidInfo.code] = countryCovidInfo.latest_data;
+      covidData[countryCovidInfo.code] = {
+        latestData: countryCovidInfo.latest_data,
+        today: countryCovidInfo.today,
+      };
     });
-    console.log(data);
+    console.log(covidData);
     return covidData;
   } catch (error) {
     throw new Error(error);
@@ -41,7 +46,7 @@ const getCovidData = async () => {
 
 const getCountriesData = async (coronaData) => {
   try {
-    const { data } = await axios.get(apisObj.proxy + apisObj.countryAPI);
+    const { data } = await axios.get(proxy + countryAPI);
     data.forEach((countryInfo) => {
       const cData = {
         name: countryInfo.name.common,
@@ -58,6 +63,7 @@ const getCountriesData = async (coronaData) => {
       }
       mainData.World.push(cData);
     });
+    console.log(mainData);
   } catch (error) {
     throw new Error(error);
   }
@@ -65,7 +71,7 @@ const getCountriesData = async (coronaData) => {
 
 const loadingIsDone = () => {
   const spinnerElement = document.querySelector(".spinner");
-  const containerElement = document.querySelector(".container");
+  const containerElement = document.querySelector(".main-container");
   spinnerElement.classList.add("display-none");
   containerElement.classList.remove("display-none");
 };
@@ -74,15 +80,80 @@ const loadingIsDone = () => {
 
 const onRegionClick = ({ target }) => {
   const reg = target.value;
-  let ObjByRegionKey;
-  for (let [key, value] of Object.entries(mainData)) {
-    if (key === reg) {
-      ObjByRegionKey = value;
-      break;
-    }
-  }
+  infoElement.classList.add("visibility-hidden");
+  chartElement.classList.remove("visibility-hidden");
   reAssignCountryOptions(reg);
+
+  // let ObjByRegionKey;
+  // for (let [key, value] of Object.entries(mainData)) {
+  //   if (key === reg) {
+  //     ObjByRegionKey = value;
+  //     break;
+  //   }
+  // }
+  // console.log(ObjByRegionKey);
+  const arrOfCountriesByRegionNames = [];
+  mainData[reg].forEach((country) => {
+    arrOfCountriesByRegionNames.push(country.name);
+  });
+  console.log(arrOfCountriesByRegionNames);
+
+  const arrOfNumBySituation = [];
+  mainData[reg].forEach((country) => {
+    arrOfNumBySituation.push(country.covidData.latestData[situationSelected]);
+  });
+  console.log(arrOfNumBySituation);
+  arrOfNumBySituation.forEach((data, index) => {
+    addData(chartElement, arrOfCountriesByRegionNames[index], data);
+  });
 };
+
+//------chart functions------///
+
+function addData(chart, label, data) {
+  // chart doc , arrOfNum, data
+  chart.data.labels.push(label);
+  chart.data.datasets.forEach((dataset) => {
+    dataset.data.push(data);
+  });
+  chart.update();
+}
+
+function removeData(chart) {
+  chart.data.labels.pop();
+  chart.data.datasets.forEach((dataset) => {
+    dataset.data.pop();
+  });
+  chart.update();
+}
+
+function updateConfigByMutating(chart) {
+  chart.options.plugins.title.text = "new title";
+  chart.update();
+}
+
+function updateConfigAsNewObject(chart) {
+  chart.options = {
+    responsive: true,
+    plugins: {
+      title: {
+        display: true,
+        text: "Chart.js",
+      },
+    },
+    scales: {
+      x: {
+        display: true,
+      },
+      y: {
+        display: true,
+      },
+    },
+  };
+  chart.update();
+}
+
+///------------------//
 
 const reAssignCountryOptions = (region) => {
   countrySelectElement.innerHTML = "";
@@ -95,14 +166,12 @@ const reAssignCountryOptions = (region) => {
 const onCountryClick = ({ target }) => {
   const countryCode = target.value;
   console.log(mainData);
-  console.log(target);
   const countryObj = mainData.World.find(
     (country) => country.code === countryCode
   );
   console.log(countryObj);
-  // const europeArr = Object.values(mainData).filter(
-  //   (country) => country.region === reg
-  // );
+  infoElement.classList.remove("visibility-hidden");
+  chartElement.classList.add("visibility-hidden");
 };
 
 const createAllOptions = () => {
@@ -115,7 +184,7 @@ const createAllOptions = () => {
     const optionCountryElement = `<option value="${region}">${region}</option>`;
     regionSelectElement.innerHTML += optionCountryElement;
   });
-  Object.keys(mainData.World[0].covidData).forEach((covidData) => {
+  Object.keys(mainData.World[0].covidData.latestData).forEach((covidData) => {
     if (covidData !== "calculated") {
       const optionCountryElement = `<option value="${covidData}">${covidData}</option>`;
       situationSelectElement.innerHTML += optionCountryElement;

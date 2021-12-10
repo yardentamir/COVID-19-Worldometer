@@ -76,7 +76,26 @@ const loadingIsDone = () => {
   containerElement.classList.remove("display-none");
 };
 
-//---------------------------//
+///------------------//
+
+const reAssignCountryOptions = (region) => {
+  countrySelectElement.innerHTML = "";
+  mainData[region].forEach((country) => {
+    const optionCountryElement = `<option value="${country.code}">${country.name}</option>`;
+    countrySelectElement.innerHTML += optionCountryElement;
+  });
+};
+
+const onCountryClick = ({ target }) => {
+  const countryCode = target.value;
+  console.log(mainData);
+  const countryObj = mainData.World.find(
+    (country) => country.code === countryCode
+  );
+  console.log(countryObj);
+  infoElement.classList.remove("visibility-hidden");
+  chartElement.classList.add("visibility-hidden");
+};
 
 const onRegionClick = ({ target }) => {
   const reg = target.value;
@@ -103,8 +122,65 @@ const onRegionClick = ({ target }) => {
     arrOfNumBySituation.push(country.covidData.latestData[situationSelected]);
   });
   console.log(arrOfNumBySituation);
+  const myChart = new Chart(chartElement, {
+    type: "bar",
+    data: {
+      labels: [],
+      datasets: [
+        {
+          label: "# of Cases",
+          data: arrOfNumBySituation,
+          backgroundColor: [
+            "rgba(255, 99, 132, 0.2)",
+            "rgba(54, 162, 235, 0.2)",
+            "rgba(255, 206, 86, 0.2)",
+            "rgba(75, 192, 192, 0.2)",
+            "rgba(153, 102, 255, 0.2)",
+          ],
+          borderColor: [
+            "rgba(255, 99, 132, 1)",
+            "rgba(54, 162, 235, 1)",
+            "rgba(255, 206, 86, 1)",
+            "rgba(75, 192, 192, 1)",
+            "rgba(153, 102, 255, 1)",
+          ],
+          borderWidth: 1,
+        },
+      ],
+    },
+    options: {
+      scales: {
+        y: {
+          beginAtZero: true,
+        },
+      },
+    },
+  });
+
   arrOfNumBySituation.forEach((data, index) => {
-    addData(chartElement, arrOfCountriesByRegionNames[index], data);
+    addData(myChart, arrOfCountriesByRegionNames[index], data);
+  });
+};
+
+const onSituationClick = ({ target }) => {
+  situationSelected = target.value;
+};
+
+const createAllOptions = () => {
+  mainData.World.forEach((country) => {
+    const optionCountryElement = `<option value="${country.code}">${country.name}</option>`;
+    countrySelectElement.innerHTML += optionCountryElement;
+  });
+
+  Object.keys(mainData).forEach((region) => {
+    const optionCountryElement = `<option value="${region}">${region}</option>`;
+    regionSelectElement.innerHTML += optionCountryElement;
+  });
+  Object.keys(mainData.World[0].covidData.latestData).forEach((covidData) => {
+    if (covidData !== "calculated") {
+      const optionCountryElement = `<option value="${covidData}">${covidData}</option>`;
+      situationSelectElement.innerHTML += optionCountryElement;
+    }
   });
 };
 
@@ -112,6 +188,7 @@ const onRegionClick = ({ target }) => {
 
 function addData(chart, label, data) {
   // chart doc , arrOfNum, data
+  console.log(chart.data);
   chart.data.labels.push(label);
   chart.data.datasets.forEach((dataset) => {
     dataset.data.push(data);
@@ -153,45 +230,6 @@ function updateConfigAsNewObject(chart) {
   chart.update();
 }
 
-///------------------//
-
-const reAssignCountryOptions = (region) => {
-  countrySelectElement.innerHTML = "";
-  mainData[region].forEach((country) => {
-    const optionCountryElement = `<option value="${country.code}">${country.name}</option>`;
-    countrySelectElement.innerHTML += optionCountryElement;
-  });
-};
-
-const onCountryClick = ({ target }) => {
-  const countryCode = target.value;
-  console.log(mainData);
-  const countryObj = mainData.World.find(
-    (country) => country.code === countryCode
-  );
-  console.log(countryObj);
-  infoElement.classList.remove("visibility-hidden");
-  chartElement.classList.add("visibility-hidden");
-};
-
-const createAllOptions = () => {
-  mainData.World.forEach((country) => {
-    const optionCountryElement = `<option value="${country.code}">${country.name}</option>`;
-    countrySelectElement.innerHTML += optionCountryElement;
-  });
-
-  Object.keys(mainData).forEach((region) => {
-    const optionCountryElement = `<option value="${region}">${region}</option>`;
-    regionSelectElement.innerHTML += optionCountryElement;
-  });
-  Object.keys(mainData.World[0].covidData.latestData).forEach((covidData) => {
-    if (covidData !== "calculated") {
-      const optionCountryElement = `<option value="${covidData}">${covidData}</option>`;
-      situationSelectElement.innerHTML += optionCountryElement;
-    }
-  });
-};
-
 const getAllData = async () => {
   try {
     const covidData = await getCovidData();
@@ -200,6 +238,7 @@ const getAllData = async () => {
     createAllOptions();
     regionSelectElement.addEventListener("change", onRegionClick);
     countrySelectElement.addEventListener("change", onCountryClick);
+    situationSelectElement.addEventListener("change", onSituationClick);
   } catch (error) {
     console.log(error);
   }

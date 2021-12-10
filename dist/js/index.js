@@ -93,14 +93,14 @@ const onCountryClick = ({ target }) => {
     (country) => country.code === countryCode
   );
   console.log(countryObj);
-  infoElement.classList.remove("visibility-hidden");
-  chartElement.classList.add("visibility-hidden");
+  infoElement.classList.remove("display-none");
+  chartElement.classList.add("display-none");
 };
 
 const onRegionClick = ({ target }) => {
   const reg = target.value;
-  infoElement.classList.add("visibility-hidden");
-  chartElement.classList.remove("visibility-hidden");
+  infoElement.classList.add("display-none");
+  chartElement.classList.remove("display-none");
   reAssignCountryOptions(reg);
 
   // let ObjByRegionKey;
@@ -122,7 +122,8 @@ const onRegionClick = ({ target }) => {
     arrOfNumBySituation.push(country.covidData.latestData[situationSelected]);
   });
   console.log(arrOfNumBySituation);
-  const myChart = new Chart(chartElement, {
+  // myChart.destroy();
+  const myChart = new Chart(document.querySelector("#myChart"), {
     type: "bar",
     data: {
       labels: [],

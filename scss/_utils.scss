@@ -14,15 +14,12 @@ h2 {
 }
 
 .container {
-  display: grid;
-  grid-template-columns: 1fr;
-  grid-template-rows: repeat(4, 1fr);
-  gap: 10px;
-  padding: 2%;
+  padding: 0 2%;
   font-family: "BalsamiqSans", Arial, Helvetica, sans-serif;
 
   > div {
     border-radius: 10px;
+    margin: 2vmin 0;
     padding: 1.5vmin;
   }
 }
@@ -42,7 +39,6 @@ body {
   }
 }
 .welcome-div {
-  grid-area: 1 / 1 / 2 / 2;
   background-color: rgb(224, 147, 2);
   box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
   text-align: center;
@@ -53,7 +49,6 @@ body {
   }
 }
 .show-info {
-  grid-area: 2 / 1 / 4 / 2;
   background-image: linear-gradient(rgb(255, 166, 0), rgb(255, 177, 177));
   box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
 }
@@ -71,7 +66,6 @@ body {
   margin: 50px 0;
 }
 .selects-div {
-  grid-area: 4 / 1 / 5 / 2;
   background-color: rgb(255, 222, 160);
   text-align: center;
   box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);

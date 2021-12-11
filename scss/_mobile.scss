@@ -1,0 +1,21 @@
+@media only screen and (max-width: 600px) {
+  /*Big smartphones [426px -> 600px]*/
+  .flex-evenly,
+  .flex-end,
+  .flex-space-around {
+    display: block;
+    justify-content: center;
+  }
+  h1 {
+    font-size: 24px;
+  }
+  .welcome-div {
+    p {
+      margin: 0 5vmin;
+      font-size: 14px;
+    }
+  }
+  .display-none {
+    display: none;
+  }
+}

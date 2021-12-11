@@ -67,63 +67,65 @@
             sick with COVID-19 and become seriously ill or die at any age.
           </p>
         </div>
-        <div class="selects-div">
+        <div class="show-info">
           <div class="selects-div-region">
             <h3>Choose By Region and Conditions:</h3>
             <div class="select-wrapper">
               <select data-select="region"></select>
             </div>
-          </div>
-          <div class="selects-div-situation">
-            <div class="select-wrapper">
-              <select data-select="situation"></select>
+            <div class="selects-div-situation">
+              <div class="select-wrapper">
+                <select data-select="situation"></select>
+              </div>
             </div>
           </div>
+
           <div class="selects-div-country">
-            <h3>Or Choose By Country:</h3>
+            <h3>Choose By Country:</h3>
             <div class="select-wrapper">
               <select data-select="country"></select>
             </div>
           </div>
         </div>
-        <div class="show-info">
-          <div class="display-none" data-char-or-info="info"">
-            <h3>Latest News</h3>
-          <div class="show-info-situation flex-evenly cards">
+        <div class="selects-div">
+          <div class="display-none flex-space-around" data-char-or-info="info">
             <div>
-              <h3>Total cases</h3>
-              <p></p>
+              <h3>Latest News</h3>
+              <div class="show-info-situation flex-center cards">
+                <div>
+                  <h3>Total cases</h3>
+                  <p data-last-condition="confirmed"></p>
+                </div>
+                <div>
+                  <h3>Total deaths</h3>
+                  <p data-last-condition="deaths"></p>
+                </div>
+                <div>
+                  <h3>Total recovered</h3>
+                  <p data-last-condition="recovered"></p>
+                </div>
+                <div>
+                  <h3>Critical</h3>
+                  <p data-last-condition="critical"></p>
+                </div>
+              </div>
             </div>
             <div>
-              <h3>Total deaths</h3>
-              <p></p>
-            </div>
-            <div>
-              <h3>Total recovered</h3>
-              <p></p>
-            </div>
-            <div>
-              <h3>Critical</h3>
-              <p></p>
+              <h3>Todays News</h3>
+              <div class="show-info-new flex-evenly cards">
+                <div>
+                  <h3>New cases</h3>
+                  <p data-today-condition="confirmed"></p>
+                </div>
+                <div>
+                  <h3>New deaths</h3>
+                  <p data-today-condition="deaths"></p>
+                </div>
+              </div>
             </div>
           </div>
-          <h3>Todays News</h3>
-          <div class="show-info-new flex-evenly cards">
-            <div>
-              <h3>New cases</h3>
-              <p></p>
-            </div>
-            <div>
-              <h3>New deaths</h3>
-              <p></p>
-            </div>
-          </div>
-        </div>
           <div class="chart-wrapper display-none" data-char-or-info="chart">
-            <canvas
-              id="myChart"
-              class="chart-wrapper-item"
-            ></canvas>
+            <canvas id="myChart" class="chart-wrapper-item"></canvas>
           </div>
         </div>
       </div>

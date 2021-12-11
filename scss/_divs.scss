@@ -1,0 +1,48 @@
+.navlike {
+  background-color: rgb(252, 240, 220);
+  padding: 0.7vmin;
+  &-logo {
+    background: url("/dist/img/coronavirus-logo.png") no-repeat center/cover;
+    width: 70px;
+    height: 70px;
+  }
+  > * {
+    margin: 0 6px;
+  }
+}
+
+.welcome-div {
+  background-color: rgb(148, 126, 111);
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  color: white;
+
+  p {
+    margin: 0 20vmin;
+  }
+}
+
+.show-info {
+  background-image: linear-gradient(rgb(252, 227, 203), rgb(247, 226, 181));
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+}
+
+.cards > div {
+  background-color: rgb(148, 126, 111);
+  color: white;
+  border-radius: 10px;
+  padding: 3vmin;
+  font-size: 14px;
+  margin: 2vmin;
+  text-align: center;
+}
+
+.selects-div {
+  background-image: linear-gradient(rgb(252, 241, 230), rgb(255, 255, 255));
+  text-align: center;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+}
+
+.display-none {
+  display: none;
+}

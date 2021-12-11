@@ -7,10 +7,13 @@ const mainData = {
 };
 
 const DEFAULT_COVID_DATA = {
-  confirmed: 0,
-  critical: 0,
-  deaths: 0,
-  recovered: 0,
+  latestData: {
+    confirmed: 0,
+    critical: 0,
+    deaths: 0,
+    recovered: 0,
+  },
+  today: { deaths: 0, confirmed: 0 },
 };
 
 const countrySelectElement = document.querySelector("[data-select='country']");
@@ -18,10 +21,46 @@ const regionSelectElement = document.querySelector("[data-select='region']");
 const situationSelectElement = document.querySelector(
   "[data-select='situation']"
 );
-const chartElement = document.querySelector("[data-char-or-info='chart']");
+const chartDivElement = document.querySelector("[data-char-or-info='chart']");
 const infoElement = document.querySelector("[data-char-or-info='info']");
+const charElement = document.querySelector("#myChart");
 
 let situationSelected = "confirmed";
+let regionSelected;
+let myChart = new Chart(charElement, {
+  type: "line",
+  data: {
+    labels: [],
+    datasets: [
+      {
+        label: "Covid-19 WorldWide Information",
+        data: [],
+        backgroundColor: [
+          "rgba(255, 99, 132, 0.2)",
+          "rgba(54, 162, 235, 0.2)",
+          "rgba(255, 206, 86, 0.2)",
+          "rgba(75, 192, 192, 0.2)",
+          "rgba(153, 102, 255, 0.2)",
+        ],
+        borderColor: [
+          "rgba(255, 99, 132, 1)",
+          "rgba(54, 162, 235, 1)",
+          "rgba(255, 206, 86, 1)",
+          "rgba(75, 192, 192, 1)",
+          "rgba(153, 102, 255, 1)",
+        ],
+        borderWidth: 1,
+      },
+    ],
+  },
+  options: {
+    scales: {
+      y: {
+        beginAtZero: true,
+      },
+    },
+  },
+});
 
 ///-----------------------//
 
@@ -86,85 +125,46 @@ const reAssignCountryOptions = (region) => {
   });
 };
 
-const onCountryClick = ({ target }) => {
-  const countryCode = target.value;
+const onCountryClick = ({ target: { value } }) => {
+  const countryCode = value;
   console.log(mainData);
   const countryObj = mainData.World.find(
     (country) => country.code === countryCode
   );
   console.log(countryObj);
   infoElement.classList.remove("display-none");
-  chartElement.classList.add("display-none");
+  chartDivElement.classList.add("display-none");
 };
 
-const onRegionClick = ({ target }) => {
-  const reg = target.value;
+const onRegionClick = ({ target: { value } }) => {
+  regionSelected = value;
   infoElement.classList.add("display-none");
-  chartElement.classList.remove("display-none");
-  reAssignCountryOptions(reg);
+  chartDivElement.classList.remove("display-none");
+  reAssignCountryOptions(regionSelected);
+  addDataByRegion(regionSelected);
+};
 
-  // let ObjByRegionKey;
-  // for (let [key, value] of Object.entries(mainData)) {
-  //   if (key === reg) {
-  //     ObjByRegionKey = value;
-  //     break;
-  //   }
-  // }
-  // console.log(ObjByRegionKey);
+const addDataByRegion = () => {
   const arrOfCountriesByRegionNames = [];
-  mainData[reg].forEach((country) => {
+  mainData[regionSelected].forEach((country) => {
     arrOfCountriesByRegionNames.push(country.name);
   });
-  console.log(arrOfCountriesByRegionNames);
 
   const arrOfNumBySituation = [];
-  mainData[reg].forEach((country) => {
+  mainData[regionSelected].forEach((country) => {
     arrOfNumBySituation.push(country.covidData.latestData[situationSelected]);
   });
-  console.log(arrOfNumBySituation);
-  // myChart.destroy();
-  const myChart = new Chart(document.querySelector("#myChart"), {
-    type: "bar",
-    data: {
-      labels: [],
-      datasets: [
-        {
-          label: "# of Cases",
-          data: arrOfNumBySituation,
-          backgroundColor: [
-            "rgba(255, 99, 132, 0.2)",
-            "rgba(54, 162, 235, 0.2)",
-            "rgba(255, 206, 86, 0.2)",
-            "rgba(75, 192, 192, 0.2)",
-            "rgba(153, 102, 255, 0.2)",
-          ],
-          borderColor: [
-            "rgba(255, 99, 132, 1)",
-            "rgba(54, 162, 235, 1)",
-            "rgba(255, 206, 86, 1)",
-            "rgba(75, 192, 192, 1)",
-            "rgba(153, 102, 255, 1)",
-          ],
-          borderWidth: 1,
-        },
-      ],
-    },
-    options: {
-      scales: {
-        y: {
-          beginAtZero: true,
-        },
-      },
-    },
-  });
+
+  removeData(myChart);
 
   arrOfNumBySituation.forEach((data, index) => {
     addData(myChart, arrOfCountriesByRegionNames[index], data);
   });
 };
 
-const onSituationClick = ({ target }) => {
-  situationSelected = target.value;
+const onSituationClick = ({ target: { value } }) => {
+  situationSelected = value;
+  addDataByRegion();
 };
 
 const createAllOptions = () => {
@@ -189,7 +189,6 @@ const createAllOptions = () => {
 
 function addData(chart, label, data) {
   // chart doc , arrOfNum, data
-  console.log(chart.data);
   chart.data.labels.push(label);
   chart.data.datasets.forEach((dataset) => {
     dataset.data.push(data);
@@ -198,9 +197,9 @@ function addData(chart, label, data) {
 }
 
 function removeData(chart) {
-  chart.data.labels.pop();
+  chart.data.labels = [];
   chart.data.datasets.forEach((dataset) => {
-    dataset.data.pop();
+    dataset.data = [];
   });
   chart.update();
 }
@@ -237,9 +236,6 @@ const getAllData = async () => {
     await getCountriesData(covidData);
     loadingIsDone();
     createAllOptions();
-    regionSelectElement.addEventListener("change", onRegionClick);
-    countrySelectElement.addEventListener("change", onCountryClick);
-    situationSelectElement.addEventListener("change", onSituationClick);
   } catch (error) {
     console.log(error);
   }
@@ -248,55 +244,6 @@ const getAllData = async () => {
 //---------------//
 
 getAllData();
-
-// const getCountries = async () => {
-//   const country = await axios.get("https://corona-api.com/countries/AF", [
-//     {
-//       headers: "application/json",
-//     },
-//   ]);
-//   console.log(country);
-//   const heirarchy = country.data.data.latest_data;
-//   const data = [
-//     heirarchy.deaths,
-//     heirarchy.confirmed,
-//     heirarchy.recovered,
-//     heirarchy.critical,
-//   ];
-//   const ctx = document.getElementById("myChart");
-//   const myChart = new Chart(ctx, {
-//     type: "bar",
-//     data: {
-//       labels: ["Deaths", "Confirmed", "Recovered", "Critical"],
-//       datasets: [
-//         {
-//           label: "# of Cases",
-//           data: data,
-//           backgroundColor: [
-//             "rgba(255, 99, 132, 0.2)",
-//             "rgba(54, 162, 235, 0.2)",
-//             "rgba(255, 206, 86, 0.2)",
-//             "rgba(75, 192, 192, 0.2)",
-//             "rgba(153, 102, 255, 0.2)",
-//           ],
-//           borderColor: [
-//             "rgba(255, 99, 132, 1)",
-//             "rgba(54, 162, 235, 1)",
-//             "rgba(255, 206, 86, 1)",
-//             "rgba(75, 192, 192, 1)",
-//             "rgba(153, 102, 255, 1)",
-//           ],
-//           borderWidth: 1,
-//         },
-//       ],
-//     },
-//     options: {
-//       scales: {
-//         y: {
-//           beginAtZero: true,
-//         },
-//       },
-//     },
-//   });
-// };
-// getCountries();
+regionSelectElement.addEventListener("change", onRegionClick);
+countrySelectElement.addEventListener("change", onCountryClick);
+situationSelectElement.addEventListener("change", onSituationClick);

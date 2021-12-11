@@ -16,15 +16,20 @@
   box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
   text-align: center;
   color: white;
-
-  p {
-    margin: 0 20vmin;
-  }
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+  box-sizing: border-box;
+  width: 50%;
 }
 
 .show-info {
   background-image: linear-gradient(rgb(252, 227, 203), rgb(247, 226, 181));
   box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+  padding: 4vmin;
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+  box-sizing: border-box;
+  width: 50%;
 }
 
 .cards > div {
@@ -39,10 +44,19 @@
 
 .selects-div {
   background-image: linear-gradient(rgb(252, 241, 230), rgb(255, 255, 255));
-  text-align: center;
   box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  border-radius: 10px;
 }
 
 .display-none {
   display: none;
+}
+
+.chart-wrapper-item {
+  padding: 2vmin;
+}
+
+.country-div {
+  padding: 3px;
 }

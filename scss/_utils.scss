@@ -1,5 +1,6 @@
 body {
   background-color: #c5c5c5;
+  font-family: "BalsamiqSans", Arial, Helvetica, sans-serif;
 }
 
 h1,
@@ -15,14 +16,16 @@ h3 {
   text-align: center;
 }
 
+ul li {
+  text-align: left;
+  list-style: none;
+}
+
 .container {
   padding: 0 4%;
-  font-family: "BalsamiqSans", Arial, Helvetica, sans-serif;
 
   > div {
-    border-radius: 10px;
     margin: 2vmin 0;
-    padding: 1.5vmin;
   }
 }
 
@@ -40,4 +43,8 @@ h3 {
   display: flex;
   justify-content: space-around;
   flex-wrap: wrap;
+}
+
+.m-4vmin {
+  margin: 4vmin;
 }

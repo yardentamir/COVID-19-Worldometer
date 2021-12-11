@@ -1,9 +1,9 @@
 @media only screen and (max-width: 600px) {
   /*Big smartphones [426px -> 600px]*/
-  .flex-evenly,
+  .flex-center,
   .flex-end,
   .flex-space-around {
-    display: block;
+    flex-direction: column;
     justify-content: center;
   }
   h1 {
@@ -11,11 +11,25 @@
   }
   .welcome-div {
     p {
-      margin: 0 5vmin;
       font-size: 14px;
     }
   }
   .display-none {
     display: none;
+  }
+
+  .show-info,
+  .welcome-div {
+    width: auto;
+  }
+
+  .welcome-div {
+    border-bottom-left-radius: 0;
+    border-top-right-radius: 10px;
+  }
+
+  .show-info {
+    border-top-right-radius: 0;
+    border-bottom-left-radius: 10px;
   }
 }

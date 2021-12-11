@@ -4,8 +4,11 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Corona</title>
+    <title>Corona Statistics</title>
     <meta name="description" content="Corona Virus Worldwide Information" />
+    <meta name="keywords" content="corona, virus, statistics" />
+    <meta name="author" content="Yarden Tamir" />
+    <link rel="icon" href="/dist/img/favicon-32x32.png" type="image/png" />
     <!-- scripts -->
     <script
       src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.6.2/chart.min.js"
@@ -24,6 +27,7 @@
     <link rel="stylesheet" href="/dist/css/main.css" />
   </head>
   <body>
+    <!-- loading spinner -->
     <div class="spinner">
       <div class="sk-circle">
         <div class="sk-circle1 sk-child"></div>
@@ -49,77 +53,93 @@
         <div>🤚🏻</div>
       </div>
     </div>
+    <!-- main content -->
     <div class="main-container display-none">
       <div class="navlike flex">
         <div class="navlike-logo"></div>
         <h2>Corona Virus</h2>
       </div>
       <div class="container">
-        <div class="welcome-div">
-          <h1>Corona Virus Worldwide Information</h1>
-          <p>
-            Most people infected with the virus will experience mild to moderate
-            respiratory illness and recover without requiring special treatment.
-            However, some will become seriously ill and require medical
-            attention. Older people and those with underlying medical conditions
-            like cardiovascular disease, diabetes, chronic respiratory disease,
-            or cancer are more likely to develop serious illness. Anyone can get
-            sick with COVID-19 and become seriously ill or die at any age.
-          </p>
-        </div>
-        <div class="show-info">
-          <div class="selects-div-region">
-            <h3>Choose By Region and Conditions:</h3>
-            <div class="select-wrapper">
-              <select data-select="region"></select>
-            </div>
-            <div class="selects-div-situation">
-              <div class="select-wrapper">
-                <select data-select="situation"></select>
-              </div>
+        <div class="flex-center">
+          <div class="welcome-div">
+            <div class="m-4vmin">
+              <h1>Corona Virus Worldwide Information</h1>
+              <p>
+                Most people infected with the virus will experience mild to
+                moderate respiratory illness and recover without requiring
+                special treatment. However, some will become seriously ill and
+                require medical attention. Older people and those with
+                underlying medical conditions like cardiovascular disease,
+                diabetes, chronic respiratory disease, or cancer are more likely
+                to develop serious illness. Anyone can get sick with COVID-19
+                and become seriously ill or die at any age. 😷
+              </p>
+              <span>
+                <h4>remember:</h4>
+                <ul>
+                  <li>🧍↔️🧍 Keep a reasonable distance from others</li>
+                  <li>🧍▫️▫️🧍 Stand 2m (6ft) apart</li>
+                </ul>
+              </span>
             </div>
           </div>
+          <div class="show-info">
+            <div class="selects-div-region">
+              <h3>Choose By Region and Conditions:</h3>
+              <div class="select-wrapper">
+                <select data-select="region"></select>
+              </div>
+              <div class="selects-div-situation">
+                <div class="select-wrapper">
+                  <select data-select="situation"></select>
+                </div>
+              </div>
+            </div>
 
-          <div class="selects-div-country">
-            <h3>Choose By Country:</h3>
-            <div class="select-wrapper">
-              <select data-select="country"></select>
+            <div class="selects-div-country">
+              <h3>Choose By Country:</h3>
+              <div class="select-wrapper">
+                <select data-select="country"></select>
+              </div>
             </div>
           </div>
         </div>
         <div class="selects-div">
-          <div class="display-none flex-space-around" data-char-or-info="info">
-            <div>
-              <h3>Latest News</h3>
-              <div class="show-info-situation flex-center cards">
-                <div>
-                  <h3>Total cases</h3>
-                  <p data-last-condition="confirmed"></p>
-                </div>
-                <div>
-                  <h3>Total deaths</h3>
-                  <p data-last-condition="deaths"></p>
-                </div>
-                <div>
-                  <h3>Total recovered</h3>
-                  <p data-last-condition="recovered"></p>
-                </div>
-                <div>
-                  <h3>Critical</h3>
-                  <p data-last-condition="critical"></p>
+          <div class="display-none country-div" data-char-or-info="info">
+            <h2 id="countryTitle"></h2>
+            <div class="flex-space-around">
+              <div>
+                <h3>Latest News</h3>
+                <div class="show-info-situation flex-center cards">
+                  <div>
+                    <h3>Total cases</h3>
+                    <p data-last-condition="confirmed"></p>
+                  </div>
+                  <div>
+                    <h3>Total deaths</h3>
+                    <p data-last-condition="deaths"></p>
+                  </div>
+                  <div>
+                    <h3>Total recovered</h3>
+                    <p data-last-condition="recovered"></p>
+                  </div>
+                  <div>
+                    <h3>Critical</h3>
+                    <p data-last-condition="critical"></p>
+                  </div>
                 </div>
               </div>
-            </div>
-            <div>
-              <h3>Todays News</h3>
-              <div class="show-info-new flex-evenly cards">
-                <div>
-                  <h3>New cases</h3>
-                  <p data-today-condition="confirmed"></p>
-                </div>
-                <div>
-                  <h3>New deaths</h3>
-                  <p data-today-condition="deaths"></p>
+              <div>
+                <h3>Todays News</h3>
+                <div class="show-info-new flex-center cards">
+                  <div>
+                    <h3>New cases</h3>
+                    <p data-today-condition="confirmed"></p>
+                  </div>
+                  <div>
+                    <h3>New deaths</h3>
+                    <p data-today-condition="deaths"></p>
+                  </div>
                 </div>
               </div>
             </div>

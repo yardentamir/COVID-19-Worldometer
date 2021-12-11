@@ -25,6 +25,7 @@ const situationSelectElement = document.querySelector(
 const chartDivElement = document.querySelector("[data-char-or-info='chart']");
 const infoElement = document.querySelector("[data-char-or-info='info']");
 const charElement = document.querySelector("#myChart");
+const countryTitleElement = document.querySelector("#countryTitle");
 
 let situationSelected = "confirmed";
 let regionSelected = "World";
@@ -60,11 +61,14 @@ let myChart = new Chart(charElement, {
         beginAtZero: true,
       },
     },
-    // indexAxis: "y",
     plugins: {
       title: {
         display: true,
         text: "",
+        font: {
+          size: 18,
+          family: "BalsamiqSans",
+        },
       },
       legend: {
         display: false,
@@ -125,18 +129,20 @@ const onCountryClick = ({ target: { value } }) => {
   infoElement.classList.remove("display-none");
   chartDivElement.classList.add("display-none");
 
-  console.log(mainData);
   let regCheck = "World";
   if (regionSelected) regCheck = regionSelected;
   const countryObj = mainData[regCheck].find(
     (country) => country.code === value
   );
+  console.log(countryObj.name);
+
+  countryTitleElement.textContent = countryObj.name;
 
   const countryLatestData = countryObj.covidData.latestData;
   delete countryLatestData["calculated"];
   console.log(countryLatestData);
-  const allLastElements = document.querySelectorAll("[data-last-condition]");
 
+  const allLastElements = document.querySelectorAll("[data-last-condition]");
   allLastElements.forEach((pElement) => {
     pElement.textContent = countryLatestData[pElement.dataset.lastCondition];
   });
@@ -181,7 +187,6 @@ const addDataByRegion = () => {
   });
 
   removeData(myChart);
-  console.log(situationSelected);
 
   arrOfNumBySituation.forEach((dataNumbers, index) => {
     addData(
@@ -234,26 +239,25 @@ const reAssignCountryOptions = (region) => {
 
 //------chart functions------///
 
-function addData(chart, labels, data, title) {
+const addData = (chart, labels, data, title) => {
   // chart doc , arrOfNum, data
   chart.data.labels.push(labels);
   chart.data.datasets.forEach((dataset) => {
     dataset.data.push(data);
   });
-  // chart.data.datasets[0].label = label;
   chart.options.plugins.legend.display = false;
   chart.options.plugins.title.text = title;
   chart.update();
-}
+};
 
-function removeData(chart) {
+const removeData = (chart) => {
   chart.data.labels = [];
   chart.data.datasets.forEach((dataset) => {
     dataset.data = [];
   });
   chart.data.datasets.label = "";
   chart.update();
-}
+};
 //----------page start func--------------//
 
 const getAllData = async () => {

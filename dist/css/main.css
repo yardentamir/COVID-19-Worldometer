@@ -7,7 +7,8 @@
   src: url("/dist/fonts/BalsamiqSans-Regular.ttf"); }
 
 body {
-  background-color: #c5c5c5; }
+  background-color: #c5c5c5;
+  font-family: "BalsamiqSans", Arial, Helvetica, sans-serif; }
 
 h1,
 h2 {
@@ -19,13 +20,14 @@ h1 {
 h3 {
   text-align: center; }
 
+ul li {
+  text-align: left;
+  list-style: none; }
+
 .container {
-  padding: 0 4%;
-  font-family: "BalsamiqSans", Arial, Helvetica, sans-serif; }
+  padding: 0 4%; }
   .container > div {
-    border-radius: 10px;
-    margin: 2vmin 0;
-    padding: 1.5vmin; }
+    margin: 2vmin 0; }
 
 /* ================================flexes================================= */
 .flex-center {
@@ -41,9 +43,15 @@ h3 {
   justify-content: space-around;
   flex-wrap: wrap; }
 
+.m-4vmin {
+  margin: 4vmin; }
+
 .spinner-titles {
   font-size: 4vmin;
   text-align: center; }
+
+.spinner-washing {
+  height: 100px; }
 
 .spinner-washing > div {
   width: max-content;
@@ -244,13 +252,20 @@ h3 {
   background-color: #947e6f;
   box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
   text-align: center;
-  color: white; }
-  .welcome-div p {
-    margin: 0 20vmin; }
+  color: white;
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+  box-sizing: border-box;
+  width: 50%; }
 
 .show-info {
   background-image: linear-gradient(#fce3cb, #f7e2b5);
-  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2); }
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+  padding: 4vmin;
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+  box-sizing: border-box;
+  width: 50%; }
 
 .cards > div {
   background-color: #947e6f;
@@ -263,11 +278,18 @@ h3 {
 
 .selects-div {
   background-image: linear-gradient(#fcf1e6, white);
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
   text-align: center;
-  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2); }
+  border-radius: 10px; }
 
 .display-none {
   display: none; }
+
+.chart-wrapper-item {
+  padding: 2vmin; }
+
+.country-div {
+  padding: 3px; }
 
 select {
   /* Reset Select */
@@ -314,15 +336,23 @@ select::-ms-expand {
 
 @media only screen and (max-width: 600px) {
   /*Big smartphones [426px -> 600px]*/
-  .flex-evenly,
+  .flex-center,
   .flex-end,
   .flex-space-around {
-    display: block;
+    flex-direction: column;
     justify-content: center; }
   h1 {
     font-size: 24px; }
   .welcome-div p {
-    margin: 0 5vmin;
     font-size: 14px; }
   .display-none {
-    display: none; } }
+    display: none; }
+  .show-info,
+  .welcome-div {
+    width: auto; }
+  .welcome-div {
+    border-bottom-left-radius: 0;
+    border-top-right-radius: 10px; }
+  .show-info {
+    border-top-right-radius: 0;
+    border-bottom-left-radius: 10px; } }

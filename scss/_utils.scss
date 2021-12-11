@@ -13,8 +13,12 @@ h2 {
   font-family: "Lobster", Arial, Helvetica, sans-serif;
 }
 
+h3 {
+  text-align: center;
+}
+
 .container {
-  padding: 0 2%;
+  padding: 0 4%;
   font-family: "BalsamiqSans", Arial, Helvetica, sans-serif;
 
   > div {
@@ -32,10 +36,14 @@ body {
 
 .navlike {
   background-color: rgb(255, 222, 160);
+  padding: 0.7vmin;
   &-logo {
     background: url("/dist/img/coronavirus-logo.png") no-repeat center/cover;
     width: 70px;
     height: 70px;
+  }
+  > * {
+    margin: 0 6px;
   }
 }
 .welcome-div {
@@ -55,15 +63,20 @@ body {
 
 .flex-evenly {
   display: flex;
-  justify-content: space-evenly;
+  justify-content: center;
+}
+
+.flex {
+  display: flex;
+  align-items: center;
 }
 
 .cards > div {
   background-color: white;
   border-radius: 10px;
-  padding: 1vmin;
+  padding: 3vmin;
   font-size: 1.5vmin;
-  margin: 50px 0;
+  margin: 2vmin;
 }
 .selects-div {
   background-color: rgb(255, 222, 160);
@@ -107,6 +120,7 @@ select::-ms-expand {
   height: 3em;
   border-radius: 0.25em;
   overflow: hidden;
+  margin: 1vmin 0;
 }
 /* Arrow */
 .select-wrapper::after {

@@ -45,19 +45,19 @@ const getCountriesData = async () => {
   }
 };
 
-const sortByRegion = () => {
-  console.log(mainObj);
-  for (const keyCode in mainObj.countriesData) {
-    if (mainObj.countriesData[keyCode].region) {
-      mainObj.regionsSet.add(mainObj.countriesData[keyCode].region);
-    }
-  }
-  const first = [...mainObj.regionsSet][0];
-  console.log(first);
-  // mainObj.regionsSet.forEach((regionSetItem) => {
-  //   mainObj.dataCountrySortedByRegion;
-  // });
-};
+// const sortByRegion = () => {
+//   console.log(mainObj);
+//   for (const keyCode in mainObj.countriesData) {
+//     if (mainObj.countriesData[keyCode].region) {
+//       mainObj.regionsSet.add(mainObj.countriesData[keyCode].region);
+//     }
+//   }
+//   const first = [...mainObj.regionsSet][0];
+//   console.log(first);
+//   // mainObj.regionsSet.forEach((regionSetItem) => {
+//   //   mainObj.dataCountrySortedByRegion;
+//   // });
+// };
 
 const regionClick = (reg = "Asia") => {
   console.log(mainObj.countriesData);

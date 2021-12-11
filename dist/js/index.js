@@ -21,7 +21,7 @@ const situationSelectElement = document.querySelector(
 const chartElement = document.querySelector("[data-char-or-info='chart']");
 const infoElement = document.querySelector("[data-char-or-info='info']");
 
-const situationSelected = "confirmed";
+let situationSelected = "confirmed";
 
 ///-----------------------//
 

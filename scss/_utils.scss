@@ -33,11 +33,13 @@ ul li {
 .flex-center {
   display: flex;
   justify-content: center;
+  flex-wrap: wrap;
 }
 
 .flex {
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
 }
 .flex-space-around {
   display: flex;
@@ -47,4 +49,10 @@ ul li {
 
 .m-4vmin {
   margin: 4vmin;
+}
+
+.or-p {
+  text-align: center;
+  font-size: 12px;
+  color: gray;
 }

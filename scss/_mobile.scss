@@ -5,6 +5,7 @@
   .flex-space-around {
     flex-direction: column;
     justify-content: center;
+    flex-wrap: nowrap;
   }
   h1 {
     font-size: 24px;

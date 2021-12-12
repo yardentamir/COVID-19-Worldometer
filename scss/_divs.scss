@@ -3,8 +3,8 @@
   padding: 0.7vmin;
   &-logo {
     background: url("/dist/img/coronavirus-logo.png") no-repeat center/cover;
-    width: 70px;
-    height: 70px;
+    width: 3em;
+    height: 3em;
   }
   > * {
     margin: 0 6px;
@@ -25,7 +25,7 @@
 .show-info {
   background-image: linear-gradient(rgb(252, 227, 203), rgb(247, 226, 181));
   box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
-  padding: 4vmin;
+  padding: 10px;
   border-top-right-radius: 10px;
   border-bottom-right-radius: 10px;
   box-sizing: border-box;
@@ -39,6 +39,7 @@
   padding: 3vmin;
   font-size: 14px;
   margin: 2vmin;
+  min-width: 100px;
   text-align: center;
 }
 

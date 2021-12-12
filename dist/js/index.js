@@ -29,7 +29,7 @@ const countryTitleElement = document.querySelector("#countryTitle");
 
 let situationSelected = "confirmed";
 let regionSelected = "World";
-let myChart = new Chart(charElement, {
+const myChart = new Chart(charElement, {
   type: "line",
   data: {
     labels: [],
@@ -91,7 +91,6 @@ const getCovidData = async () => {
         today: countryCovidInfo.today,
       };
     });
-    console.log(covidData);
     return covidData;
   } catch (error) {
     throw new Error(error);
@@ -117,7 +116,6 @@ const getCountriesData = async (coronaData) => {
       }
       mainData.World.push(cData);
     });
-    console.log(mainData);
   } catch (error) {
     throw new Error(error);
   }
@@ -134,13 +132,11 @@ const onCountryClick = ({ target: { value } }) => {
   const countryObj = mainData[regCheck].find(
     (country) => country.code === value
   );
-  console.log(countryObj.name);
 
   countryTitleElement.textContent = countryObj.name;
 
   const countryLatestData = countryObj.covidData.latestData;
   delete countryLatestData["calculated"];
-  console.log(countryLatestData);
 
   const allLastElements = document.querySelectorAll("[data-last-condition]");
   allLastElements.forEach((pElement) => {
@@ -148,7 +144,6 @@ const onCountryClick = ({ target: { value } }) => {
   });
 
   const allTodayElements = document.querySelectorAll("[data-today-condition]");
-  console.log(countryObj.covidData.today);
   allTodayElements.forEach((pElement) => {
     pElement.textContent =
       countryObj.covidData.today[pElement.dataset.todayCondition];
